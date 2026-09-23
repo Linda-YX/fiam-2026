@@ -1,0 +1,27 @@
+# Raw competition data
+*.parquet
+*.zip
+
+# Local / generated research bundles
+CHATGPT_REVIEW_BUNDLE*
+outputs/
+output/
+cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Local logs and temporary files
+*.log
+*.tmp
