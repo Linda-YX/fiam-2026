@@ -15,25 +15,29 @@ The numerical research workflow is intentionally separated into two layers:
 
 ## Repository map
 
+- [Master experiment table](docs/EXPERIMENTS.md)
 - [Research tracker](docs/RESEARCH.md)
+- [Results snapshot](docs/RESULTS_SNAPSHOT.md)
 - [Elastic Net baseline](experiments/elastic_net/README.md)
 - [LightGBM](experiments/lightgbm/README.md)
 - [LambdaMART](experiments/lambdamart/README.md)
+- [LambdaMART text ablation](experiments/lambdamart_text/README.md)
 
 ## Current status
 
-| Model | Role | Current research conclusion |
+| Model / branch | Role | Current research conclusion |
 |---|---|---|
 | Elastic Net | Transparent linear baseline | Some cross-sectional signal, but unstable across research-test years |
 | LightGBM | Nonlinear regression challenger | Strongly regime-dependent; nonlinear flexibility did not improve stability |
-| LambdaMART | Learning-to-rank candidate | Strongest current ranking architecture; portfolio risk controls materially improve investability, but 2020 remains a clear regime failure |
+| LambdaMART V2 | Learning-to-rank + risk-controlled portfolio | Current lead numerical architecture; 2020 remains a clear regime failure |
+| LambdaMART V2 + text | Incremental 8-K text branch | Portfolio metrics improved, but validation Rank IC did not; **not validation-approved** pending mechanism diagnostics |
 
 ## Data / leakage policy
 
 - The supplied raw Parquet datasets are **not committed to GitHub**.
 - Target: next-month excess return already supplied as `ret_exc_lead1m`; it is never used as a predictor and is never shifted again.
 - Architecture research is restricted to pre-2021 target months.
-- 2021–2026 competition OOS returns remain protected during model development.
+- 2021–2026 competition OOS returns remain protected during model development and cannot be used to retune a frozen branch.
 - All splits are defined by **target month**, not feature month.
 
 ## Competition constraints
