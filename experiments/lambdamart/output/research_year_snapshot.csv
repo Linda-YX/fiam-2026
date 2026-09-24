@@ -1,0 +1,4 @@
+test_year,risk_controlled_sharpe,long_annualized_return,short_underlying_annualized_return,notes
+2018,6.03,,,"Strong research-test year"
+2019,1.18,,,"Positive research-test year"
+2020,-1.04,0.423,0.727,"Ranking failure: predicted short book rose more than long book"
