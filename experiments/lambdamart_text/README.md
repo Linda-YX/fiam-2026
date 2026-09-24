@@ -92,8 +92,70 @@ Use 2018–2020 only for inference and do not retune LambdaMART.
 
 After the diagnostic specification is frozen, apply the exact same analysis once to 2021–2026 as confirmation only.
 
+
+## Validation-only mechanism diagnostic — completed
+
+A frozen diagnostic was run using only the saved 2018–2020 validation predictions, holdings, and monthly returns. No model was retrained, no threshold or feature was selected, and no 2021–2026 outcome was read.
+
+### Executive findings
+
+| Question | Full text vs baseline | Interpretation |
+|---|---:|---|
+| Tail spread | +0.23% / month, t = 0.267, 95% bootstrap CI [-1.33%, 2.00%] | No reliable tail-ranking improvement |
+| Top-decile precision | -0.83%, t = -1.018 | No evidence of better winner identification |
+| Bottom-decile precision | -1.67%, t = -2.712 | Worse bottom-decile membership precision |
+| Union-tail Rank IC | -0.014, t = -1.123 | Tail ordering did not improve |
+| Long replacement benefit | +0.01%, t = 0.015 | Essentially zero average migration benefit |
+| Short replacement benefit | +0.01%, t = 0.007 | Essentially zero average migration benefit |
+| Down-moved minus up-moved future bottom-5% rate | -0.52%, t = -2.049 | Opposite sign to the downside-demotion hypothesis |
+| Rank change vs future bottom-5% indicator | +0.009, t = 2.469 | Opposite sign to the downside-demotion hypothesis |
+| Net 10 bp P&L improvement | +0.64% / month, t = 0.880 | Positive but weak average monthly evidence |
+
+The saved artifacts did not contain a future residual-return or idiosyncratic-volatility outcome, so the narrower claim that text predicts idiosyncratic volatility remains untested.
+
+### Extreme-observation concentration
+
+The strongest diagnostic finding is concentration rather than broad ranking improvement:
+
+- the five largest positive name-month contributions equal **112.31%** of aggregate gross full-text improvement;
+- the three best incremental months equal **134.70%** of aggregate net improvement;
+- shares above 100% mean these extreme gains offset negative incremental contributions elsewhere.
+
+Net 10 bp counterfactual:
+
+| Scenario | Sharpe | IR vs 4% hurdle | Max DD |
+|---|---:|---:|---:|
+| Baseline | 0.543 | 0.399 | -44.72% |
+| Full text | 0.806 | 0.664 | -27.39% |
+| Full text without top 5 positive name-months | 0.506 | 0.362 | -36.33% |
+| Full text without top 3 incremental months | 0.470 | 0.318 | -41.01% |
+
+Several of the largest positive contributions came from avoiding shorts in stocks that subsequently experienced extreme positive returns, including WKHS (+601%), MCRB (+608%), CODX (+306%), AR (+318%), and QEP (+195%). Other large contributions came from long entries or short-to-long transitions in extreme winners.
+
+### Updated mechanism conclusion
+
+The validation evidence does **not** support H1 (systematically better traded-tail ranking). Realized-downside diagnostics also do not support the simple version of H2 in which text systematically demotes future bottom-tail losers.
+
+The best-supported description is currently:
+
+> **Text changes a small number of economically important positions, and the observed portfolio improvement is heavily concentrated in a handful of extreme stock-months.**
+
+This does not yet distinguish genuine sparse event information from luck. The next research question is therefore whether the extreme movers share ex-ante text/event characteristics that were available before the return realization.
+
+### Next research branch: sparse event signal vs luck
+
+Freeze the extreme-event diagnostic before inspecting additional outcomes. The next experiment should ask:
+
+1. Did the large positive text-induced P&L observations have unusual pre-return 8-K activity, item types, amendments, filing frequency, novelty, or filing recency?
+2. Across **all** stock-months with comparable ex-ante text patterns—not just the winners—are future absolute returns, upside-tail events, downside-tail events, or short-squeeze-like outcomes systematically different?
+3. Does the relationship survive leave-one-event-out / winsorized P&L analysis and exclusion of the largest movers?
+4. Is the effect concentrated by side (especially avoiding catastrophic shorts), size/liquidity bucket, sector, or 2020 stress months?
+5. Can any relationship be stated as a pre-specified risk/event overlay without using protected 2021–2026 outcomes for selection?
+
+Until that test is complete, the text branch remains **not validation-approved**.
+
 ## Decision
 
 **Not validation-approved; retain as a documented research branch.**
 
-The text layer is interesting because portfolio outcomes improve despite weaker broad validation Rank IC. The next step is mechanism diagnosis, not additional text-layer tuning.
+The mechanism diagnostic weakens the broad-ranking and simple downside-risk stories. The remaining question is whether text contains a sparse, ex-ante event-risk signal or whether the portfolio improvement is dominated by chance extreme observations.
