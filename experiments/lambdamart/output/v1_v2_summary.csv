@@ -1,0 +1,4 @@
+version,portfolio,pooled_rank_ic,gross_sharpe,net_sharpe_5bp,approx_competition_ir_gross,approx_competition_ir_10bp,mean_net_beta,max_sector_exposure,max_drawdown,notes
+V1,raw,0.0684,0.256,,,,,-0.469,0.63,-0.583,"Initial learning-to-rank result; material unintended exposures"
+V2,raw,0.0630,0.396,0.371,,,-0.411,0.51,-0.479,"Improved portfolio-side implementation before final risk controls"
+V2,risk_controlled,0.0513,0.601,0.572,0.457,0.399,-0.057,0.20,-0.441,"Current lead architecture; 2020 remains a ranking/regime failure"
