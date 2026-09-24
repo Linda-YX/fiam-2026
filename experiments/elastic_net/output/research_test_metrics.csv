@@ -1,0 +1,4 @@
+test_year,selected_alpha,l1_ratio,nonzero_coefficients,oos_r2,rank_ic_mean,rank_ic_median,rank_ic_positive_month_rate,gross_sharpe,max_drawdown,notes
+2018,0.01,0.75,0,-0.01109,,,,,,"Locked refit collapsed to constant predictions; ranking and portfolio metrics invalid"
+2019,0.01,0.05,46,0.001665,0.0845007,0.09434,0.833333,0.62896,-0.2332,"Valid untouched research-test year"
+2020,0.01,0.50,1,0.004376,-0.002696,0.02655,0.583333,0.04548,-0.29925,"Valid untouched research-test year"
