@@ -142,20 +142,69 @@ The best-supported description is currently:
 
 This does not yet distinguish genuine sparse event information from luck. The next research question is therefore whether the extreme movers share ex-ante text/event characteristics that were available before the return realization.
 
-### Next research branch: sparse event signal vs luck
+### Sparse event-risk diagnostic — completed
 
-Freeze the extreme-event diagnostic before inspecting additional outcomes. The next experiment should ask:
+The follow-up test used only frozen 2018–2020 validation predictions/holdings and existing ex-ante txt_v1/txt_v2 features. It did not retrain LambdaMART, tune thresholds, create new text features, or inspect 2021–2026 outcomes.
 
-1. Did the large positive text-induced P&L observations have unusual pre-return 8-K activity, item types, amendments, filing frequency, novelty, or filing recency?
-2. Across **all** stock-months with comparable ex-ante text patterns—not just the winners—are future absolute returns, upside-tail events, downside-tail events, or short-squeeze-like outcomes systematically different?
-3. Does the relationship survive leave-one-event-out / winsorized P&L analysis and exclusion of the largest movers?
-4. Is the effect concentrated by side (especially avoiding catastrophic shorts), size/liquidity bucket, sector, or 2020 stress months?
-5. Can any relationship be stated as a pre-specified risk/event overlay without using protected 2021–2026 outcomes for selection?
+#### What the extreme observations looked like
 
-Until that test is complete, the text branch remains **not validation-approved**.
+Some successful text-induced position changes had conspicuous ex-ante filing/text characteristics. Examples include AR (abrupt-exit / novel-distress features) and CODX (financing / Item 1.01 / Item 8.01 features). However, there was no common signature: **6/10** largest positive and **7/10** largest negative incremental-P&L observations had no current-month filing.
+
+#### Broader matched-population test
+
+Candidate text patterns discovered from the extreme observations were then tested across all comparable validation stock-months, with controls matched within target month × size tercile × liquidity tercile.
+
+- Filing intensity: Δ top-5% event probability **+0.73%**, t = **2.248**, BH q = **0.104**.
+- Novelty: Δ top-5% event probability **+0.86%**, t = **2.155**, BH q = **0.104**.
+- No candidate pattern had a positive top-5% event-probability difference with BH q < 0.10.
+- Transactions/financing produced a significant result in the opposite direction: Δ top-5% probability **-1.42%**, t = **-4.499**, q = **0.001**.
+
+These tests are exploratory because candidate families were motivated by selected extreme winners/losers. The near-threshold filing-intensity and novelty results are retained as possible hypotheses for an independent future sample, not as validated signals.
+
+#### Catastrophic-short hypothesis
+
+The most-upgraded text rank-change decile versus the most-downgraded decile showed:
+
+- Δ top-5% future-return event rate: **+0.58%**, t = **0.982**;
+- Δ top-2% event rate: **+0.25%**, t = **0.816**;
+- cross-decile monotonicity for top-5% events: **0.024**.
+
+Within the baseline short book, text-avoided names versus retained shorts also did not show a reliable catastrophic-upside pattern. Therefore the evidence does not establish text as a systematic short-squeeze / catastrophic-short detector.
+
+#### Robustness to extreme returns
+
+The original full-text minus baseline improvement was **+0.64% net return per month**. That advantage was highly sensitive to extreme observations:
+
+| Scenario | Δ mean net return / month | t-stat | Δ Sharpe | Δ competition IR |
+|---|---:|---:|---:|---:|
+| Original | +0.64% | 0.880 | +0.263 | +0.265 |
+| Monthly 1/99 winsorization | -0.13% | -0.266 | -0.110 | -0.106 |
+| Exclude 5 largest absolute held stock-month returns | +0.13% | 0.204 | +0.050 | +0.052 |
+| Exclude 10 largest absolute held stock-month returns | +0.08% | 0.121 | +0.028 | +0.029 |
+| Exclude 2020 | +0.16% | 0.232 | +0.294 | +0.273 |
+
+The incremental effect was concentrated in the **short side (83.09%)**, **small stocks (78.02%)**, and **2020 (83.49%)**. The no-current-month-filing category accounted for **141.17%** of aggregate improvement because its gains offset losses elsewhere.
+
+### Final text-layer interpretation
+
+The text layer is **not adopted into the core strategy**.
+
+The correct conclusion is not that text is useless. It did make several economically valuable position changes in validation, including avoiding shorts before a handful of extreme positive returns. However, the follow-up tests did not show that those successes arise from a stable, repeatable 8-K/event pattern.
+
+Current status:
+
+> **Interesting experimental signal, but not validated. Portfolio improvement is real in-sample/validation history, yet it is highly dependent on a small number of extreme stock-months and no systematic text mechanism has been established.**
+
+Accordingly:
+
+- do **not** claim that text broadly improves return ranking;
+- do **not** claim that text is a validated downside-risk or catastrophic-short detector;
+- retain the text code, features, results, and diagnostics as a documented research branch;
+- retain filing intensity and novelty only as exploratory hypotheses for genuinely independent future testing;
+- keep **LambdaMART V2 with the 147 characteristics** as the core model while its unusually strong performance is subjected to separate robustness / tradeability stress tests.
 
 ## Decision
 
-**Not validation-approved; retain as a documented research branch.**
+**NOT ADOPTED / NOT VALIDATION-APPROVED — documented experimental branch.**
 
-The mechanism diagnostic weakens the broad-ranking and simple downside-risk stories. The remaining question is whether text contains a sparse, ex-ante event-risk signal or whether the portfolio improvement is dominated by chance extreme observations.
+The sparse-event follow-up does not validate the remaining event-risk mechanism. The more defensible interpretation is that the observed portfolio improvement is dominated by a handful of extreme observations; whether those particular successful position changes contained genuine information cannot be ruled out, but it has not been shown to be repeatable.
