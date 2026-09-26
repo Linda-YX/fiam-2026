@@ -6,49 +6,72 @@ Private team research repository for the 2026 McGill-FIAM Asset Management Hacka
 
 Build a reproducible, market-neutral U.S. equity strategy using the supplied monthly stock-characteristics panel while enforcing strict no-look-ahead research practices.
 
-The numerical research workflow is intentionally separated into two layers:
+The workflow separates:
 
-1. **Alpha model** — learns which stocks should rank above or below others.
-2. **Portfolio construction** — converts model scores into positions while controlling beta, sector, liquidity, concentration, and turnover.
+1. **Alpha generation** — which stocks should rank above or below others?
+2. **Portfolio construction** — how much of that signal can be expressed after tradeability, concentration, short-risk, beta, sector, turnover and cost controls?
 
-> **Research principle:** the model decides what it likes; portfolio construction decides how much risk to take.
+> **Current principle:** LambdaMART decides what the strategy likes; the institutional portfolio engine decides how much risk is safe and economical to take.
 
-## Repository map
+## Start here
 
-- [Master experiment table](docs/EXPERIMENTS.md)
-- [Research tracker](docs/RESEARCH.md)
-- [Results snapshot](docs/RESULTS_SNAPSHOT.md)
-- [Elastic Net baseline](experiments/elastic_net/README.md)
+- **[Team Briefing](docs/TEAM_BRIEFING.md)** — headline results and year-by-year metrics for the current candidate
+- **[Research Journey](docs/RESEARCH_JOURNEY.md)** — chronological story of what we tried, what failed and why the strategy changed
+- **[Current Strategy Specification](docs/STRATEGY_SPEC.md)** — frozen LambdaMART Institutional Strategy V1
+- [Master Experiment Table](docs/EXPERIMENTS.md)
+- [Research Tracker](docs/RESEARCH.md)
+- [Results Snapshot](docs/RESULTS_SNAPSHOT.md)
+
+## Current candidate
+
+### LambdaMART Institutional Strategy V1
+
+**Frozen LambdaMART V2 signal + Strict B1-style institutional portfolio construction**
+
+2018–2020 validation:
+
+| Metric | Result |
+|---|---:|
+| Gross Sharpe | **1.097** |
+| Net Sharpe after modeled costs | **0.929** |
+| Gross competition IR | **0.415** |
+| Net competition IR | **0.248** |
+| Net max drawdown | **-4.4%** |
+| Average one-way turnover | **10.3%** |
+| Realized CAPM beta | **0.015** |
+| Average positions | **234** |
+
+The alpha model was not retrained to obtain these results. Phase 1 and Phase 1.5 instead tested whether a stricter institutional portfolio layer could express the frozen LambdaMART signal more credibly.
+
+## Research path
+
+Elastic Net -> LightGBM -> LambdaMART V1 -> V2 risk controls -> 8-K text (not adopted) -> Nathan replication -> common-engine signal comparison -> Phase 1 -> Phase 1.5 -> LambdaMART Institutional Strategy V1
+
+Negative and inconclusive branches remain in the repository deliberately.
+
+## Experiment folders
+
+- [Elastic Net](experiments/elastic_net/README.md)
 - [LightGBM](experiments/lightgbm/README.md)
 - [LambdaMART](experiments/lambdamart/README.md)
-- [LambdaMART text ablation](experiments/lambdamart_text/README.md)
-
-## Current status
-
-| Model / branch | Role | Current research conclusion |
-|---|---|---|
-| Elastic Net | Transparent linear baseline | Some cross-sectional signal, but unstable across research-test years |
-| LightGBM | Nonlinear regression challenger | Strongly regime-dependent; nonlinear flexibility did not improve stability |
-| LambdaMART V2 | Learning-to-rank + risk-controlled portfolio | Current lead numerical architecture; 2020 remains a clear regime failure |
-| LambdaMART V2 + text | Incremental 8-K text branch | Portfolio metrics improved, but validation Rank IC did not; **not validation-approved** pending mechanism diagnostics |
+- [LambdaMART + 8-K text](experiments/lambdamart_text/README.md)
+- [Phase 1: Nathan B1 vs LambdaMART](experiments/phase1_signal_comparison/README.md)
+- [Phase 1.5: Explain Cell C](experiments/phase1_5_explain_c/README.md)
 
 ## Data / leakage policy
 
-- The supplied raw Parquet datasets are **not committed to GitHub**.
-- Target: next-month excess return already supplied as `ret_exc_lead1m`; it is never used as a predictor and is never shifted again.
+- Raw competition Parquet datasets are **not committed to GitHub**.
+- Target: supplied next-month excess return ret_exc_lead1m; it is never used as a predictor and is never shifted again.
 - Architecture research is restricted to pre-2021 target months.
-- 2021–2026 competition OOS returns remain protected during model development and cannot be used to retune a frozen branch.
-- All splits are defined by **target month**, not feature month.
+- 2021–2026 outcomes have already been viewed and are treated as **post-hoc documentation only**, not as a tuning set.
+- Splits are defined by target month.
 
-## Competition constraints
+## Competition / portfolio discipline
 
-Final strategy work will respect the challenge requirements, including:
-- 100–500 total positions
-- gross exposure ≤ 200%
-- net exposure between −50% and +50%
-- near-zero realized market beta
-- explicit reporting of turnover, drawdown, alpha, information ratio, long/short legs, and risk exposures
+The current candidate uses 200% gross, dollar neutrality, dual-beta neutrality at formation, sector exposure controls, a 1% name cap, institutional price/size/liquidity eligibility, a 10% one-way turnover budget, a FINRA short-interest veto, and explicit trading/borrow cost assumptions.
 
-## Notes
+See [STRATEGY_SPEC.md](docs/STRATEGY_SPEC.md) for the exact frozen definition.
 
-This repository is a research log, not a claim that every experiment is production-ready. Negative results and failed hypotheses are retained deliberately so the final process is auditable.
+## Repository philosophy
+
+This repository is an audit trail, not a highlight reel. A higher historical Sharpe is not enough to adopt a branch. Signal evidence, portfolio evidence, implementation realism and research independence are recorded separately.
