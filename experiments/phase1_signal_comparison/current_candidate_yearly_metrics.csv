@@ -1,0 +1,4 @@
+year,sample_role,gross_sharpe,net_sharpe,gross_competition_ir,net_competition_ir,net_max_drawdown,avg_one_way_turnover,realized_beta,rank_ic,net_return
+2018,VALIDATION,1.070913,0.825024,0.215075,-0.023891,-0.031211,0.109091,0.001315,0.002765,0.038528
+2019,VALIDATION,0.453285,0.261613,-0.395869,-0.586926,-0.028154,0.100000,-0.034390,0.030022,0.011361
+2020,VALIDATION,1.562012,1.445820,1.048634,0.932130,-0.044493,0.100000,0.031242,-0.009387,0.115508
